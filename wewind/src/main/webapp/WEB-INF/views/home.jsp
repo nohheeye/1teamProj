@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>
-front에서 수정
+front에서 수정 bbbbb
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
