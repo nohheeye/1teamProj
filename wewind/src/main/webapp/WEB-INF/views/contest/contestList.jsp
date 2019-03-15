@@ -299,8 +299,9 @@ Calendar cal = Calendar.getInstance();
 
 
 <br> 
+</div>
 <button class="newmember_btn" id="newmember_btn" onclick="location='/contest/writeView'"><span>글쓰기</span></button><br><br>
- </div>
+
  
  </div> 
 			
