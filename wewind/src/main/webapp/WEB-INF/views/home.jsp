@@ -6,9 +6,7 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-front에서 수정 ccccc
-</h1>
+<h1>front git</h1>
 
 <P>  The time on the server is ${serverTime}. </P>
 </body>
