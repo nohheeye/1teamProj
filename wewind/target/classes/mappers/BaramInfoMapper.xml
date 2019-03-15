@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BaramInfo">
+
+	<select id="select" resultType="BaramInfoVO"
+		parameterType="Integer">
+		SELECT b.*, m.name AS acti_name
+		FROM BARAM_INFO b
+		JOIN MEMBER m
+		ON b.info_id = m.id
+		WHERE b.info_b_no = #{info_b_no}
+	</select>
+
+
+	<select id="selectOne" resultType="BaramInfoVO"
+		parameterType="Integer">
+		SELECT * FROM BARAM_INFO
+		WHERE acti_b_no = #{acti_b_no}
+
+	</select>
+
+	<update id="update" parameterType="BaramVO">
+		UPDATE BARAM set
+		b_introduce=#{b_introduce},
+		b_name=#{b_name},b_difficulty=#{b_difficulty}
+		WHERE b_no = #{b_no}
+	</update>
+
+	<insert id="create" parameterType="BaramVO">
+		INSERT INTO BARAM (
+		b_name,b_introduce,b_difficulty, b_madeday,b_cate,b_activityplan,
+		b_place, b_support, b_proposal, b_mader, b_owner)
+		VALUES(
+		#{b_name},#{b_introduce},#{b_difficulty}, now(),#{b_cate},
+		#{b_activityplan},
+		#{b_place}, #{b_support}, #{b_proposal}, #{b_mader},
+		#{b_owner}
+		);
+	</insert>
+	<insert id="create2" parameterType="BaramVO">
+		INSERT INTO BARAM (
+		b_name,b_introduce,b_difficulty, b_madeday
+		)
+		VALUES(
+		#{b_name},#{b_introduce},#{b_difficulty}, now()
+		);
+	</insert>
+
+	<insert id="create_" parameterType="BaramVO">
+		INSERT INTO BARAM (
+		b_name,b_introduce,b_difficulty, b_madeday
+		)
+		VALUES(
+		#{b_name},#{b_introduce},#{b_difficulty}, now()
+
+		);
+	</insert>
+	<update id="delete" parameterType="Integer">
+		UPDATE BARAM set b_deleted=1
+		WHERE b_no = #{b_no}
+	</update>
+
+
+	<select id="getTime" resultType="string">
+		SELECT now()
+	</select>
+</mapper>
+

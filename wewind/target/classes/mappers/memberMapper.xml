@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 부를 때 member.insert 이런식으로.  -->
+<mapper namespace="member">
+	
+	<!-- auth(0:미인증, 1:일반회원, 2:회장) -->
+    <insert id="insert">
+        insert into MEMBER values(#{id},#{name},#{password},#{email},#{auth},#{face_filepath},#{b_count})
+    </insert>
+    
+    <insert id="insertAuthNumber">
+    	insert into MEMBER_AUTH values(#{auth_no},#{auth_id},#{auth_email},#{auth_code})
+    </insert>
+    
+    <select id="selectAuthNumber" resultType="MemberAuthVO">
+    	select * from MEMBER_AUTH where auth_id=#{auth_id} and auth_email=#{auth_email} ORDER BY auth_no DESC LIMIT 1;
+    </select>
+    
+    <select id="select" resultType="MemberVO">
+        select * from MEMBER where id=#{id}
+    </select>
+    
+    <select id="selectBaram" resultType="BaramVO">
+    	SELECT b.b_no, b.b_name FROM BARAM b LEFT OUTER JOIN BARAM_INFO i ON b.b_no=i.info_b_no 
+    	WHERE i.info_id=#{id};
+    </select>
+    
+    <select id="login" resultType="MemberVO">
+        select * from MEMBER where id=#{id} and password=#{password}
+    </select>
+    
+    <update id="update">
+        update MEMBER set password=#{password}, name=#{name}, email=#{email} where id=#{id}
+    </update>
+    
+    <update id="updatePassword">
+        update MEMBER set password=#{password} where id=#{id}
+    </update>
+    
+    <delete id="delete">
+        delete from MEMBER where id=#{id}
+    </delete>
+    
+    <select id="list" resultType="MemberVO" >
+        select * from MEMBER
+    </select>
+
+
+</mapper>

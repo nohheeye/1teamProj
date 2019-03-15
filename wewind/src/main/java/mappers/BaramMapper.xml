@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Baram">
+
+ 	<select id="select" resultType="BaramVO">
+        SELECT * FROM BARAM WHERE b_exist = 1<!--  WHERE b_deleted = 0-->
+    </select>
+
+
+ 	<select id="selectOne" resultType="BaramVO" parameterType="Integer">
+        SELECT * FROM BARAM WHERE b_no = #{b_no} AND b_exist = 1
+    </select>
+
+	<update id="update"  parameterType="BaramVO">
+		UPDATE BARAM set b_introduce=#{b_introduce}
+		WHERE b_no = #{b_no}
+	</update>
+ 	
+ 	<insert id="create" parameterType="BaramVO">
+ 		INSERT INTO BARAM (
+ 			b_name, b_introduce, b_difficulty, b_madeday, b_cate, b_activityplan,
+ 		 	b_place, b_support, b_proposal, b_mader, b_owner, b_exist, b_classify)
+ 		VALUES(
+ 			#{b_name}, #{b_introduce}, #{b_difficulty}, now(), #{b_cate}, #{b_activityplan},
+ 			#{b_place}, #{b_support}, #{b_proposal}, #{b_mader}, #{b_owner}, 1, #{b_classify}
+ 		);
+ 	</insert>
+ 	
+ 	<update id="delete">
+		UPDATE BARAM set b_exist=0
+		WHERE b_no = #{b_no} 
+	</update>
+
+
+ 	<select id="getTime" resultType="string">
+        SELECT now()
+    </select> 	   
+    
+    <select id="idCheck" resultType="Integer" parameterType="String">
+        SELECT count(b_name) as count FROM BARAM WHERE b_name= #{b_name} <!--  WHERE b_deleted = 0-->
+    </select>
+    
+    <select id="selectCate" resultType="CategoryVO">
+        SELECT * FROM CATEGORY <!--  WHERE b_deleted = 0-->
+    </select>
+    
+    <select id="selectCatePar" resultType="CategoryVO">
+        select distinct b_cate_parent from CATEGORY  
+    </select>
+    
+ 	<select id="makeCate" resultType="CategoryVO" parameterType="String">
+        select distinct b_cate from CATEGORY WHERE b_cate_parent=#{b_cate_parent}  
+    </select>
+    
+</mapper>
+

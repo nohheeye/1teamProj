@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminPage">
+
+	<!-- 관리자 웹페이지/바람개비활동내역 리스트 -->
+	<select id="selectBaram" resultType="BaramVO">
+		SELECT a.*,
+		count(b.acti_b_no) AS b_activity_count
+		FROM `baram`.`BARAM` a
+		JOIN
+		`baram`.`ACTIVITY` b
+		ON a.b_no = b.acti_b_no
+		GROUP BY b.acti_b_no DESC
+
+	</select>
+
+	<!-- 관리자 웹페이지/활동내역 페이지에서 참여도 정보 가져오 -->
+
+	<select id="selectBaramInfo" resultType="BaramInfoVO"
+		parameterType="Integer">
+		SELECT b.*, m.name AS acti_name
+		FROM BARAM_INFO b
+		JOIN
+		MEMBER m
+		ON b.info_id = m.id
+		WHERE info_b_no=#{info_b_no}
+	</select>
+
+
+	<insert id="createAward" parameterType="AwardVO">
+		INSERT INTO AWARD (
+		award_b_no, award_content, award_filepath
+		)
+		VALUES(
+		#{award_b_no}, #{award_content}, #{award_filepath}
+		);
+	</insert>
+
+	<select id="selectAward" resultType="AwardVO"
+		parameterType="Integer">
+		SELECT a.*, b.b_name as b_name
+		FROM AWARD a
+		JOIN BARAM b
+		on b.b_no = a.award_b_no
+		WHERE a.award_exist = 1
+		ORDER BY award_no desc
+		LIMIT #{pageStart},
+		#{perPageNum}
+
+	</select>
+
+	<update id="updateAward" parameterType="AwardVO">
+		UPDATE AWARD set
+		award_content=#{award_content},
+		award_filepath=#{award_filepath}
+
+		WHERE award_no = #{award_no}
+	</update>
+
+	<update id="deleteAward" parameterType="Integer">
+		UPDATE AWARD set
+		award_exist=0
+		WHERE award_no = #{award_no}
+
+	</update>
+
+	<!-- awardListPaing 페이징 한거 완료. -->
+	<select id="awardListPaging" resultType="AwardVO"
+		parameterType="Integer">
+		SELECT a.*, b.b_name as b_name
+		FROM AWARD a
+		JOIN BARAM b
+		on b.b_no =
+		a.award_b_no
+		WHERE a.award_exist = 1
+		ORDER BY award_no desc
+		LIMIT #{pageStart},
+		#{perPageNum}
+	</select>
+<!-- awardCount -->
+	<select id="awardCount" resultType="Integer">
+		select count(*) as count from
+		AWARD WHERE award_exist = 1
+	</select>
+	<!-- activityListPaing 페이징 한거 완료. -->
+	<select id="activityListPaging" resultType="BaramVO"
+		parameterType="Integer">
+		SELECT a.*, count(b.acti_b_no) AS b_activity_count
+		FROM `baram`.`BARAM` a
+		JOIN `baram`.`ACTIVITY` b
+		ON a.b_no = b.acti_b_no
+		GROUP BY b.acti_b_no
+		ORDER BY b.acti_b_no DESC
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	
+	<!-- activityCount -->
+	<select id="activityCount" resultType="Integer">
+	
+		SELECT count(distinct acti_b_no) as totalCount from ACTIVITY
+	</select>
+</mapper>
+

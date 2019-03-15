@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Activity">
+
+	<select id="select" resultType="ActivityVO"
+		parameterType="Integer">
+		SELECT * FROM ACTIVITY 
+		WHERE acti_exist =1 AND acti_b_no=#{acti_b_no}
+		ORDER BY acti_no desc
+	</select>
+
+	<select id="selectOne" resultType="ActivityVO"
+		parameterType="Integer">
+		SELECT * FROM ACTIVITY WHERE acti_no = #{acti_no}
+	</select>
+
+	<update id="update" parameterType="ActivityVO">
+		UPDATE ACTIVITY set
+		acti_title=#{acti_title},
+		acti_content=#{acti_content}
+		WHERE acti_no = #{acti_no}
+	</update>
+
+
+	<insert id="create" parameterType="ActivityVO">
+		INSERT INTO ACTIVITY (
+		acti_b_no,acti_title,
+		acti_writer,
+		acti_writedate, acti_date,
+		acti_content, acti_filepath
+		)
+		VALUES(
+		#{acti_b_no}, #{acti_title},
+		#{acti_writer},
+		now(), #{acti_date},
+		#{acti_content}, #{acti_filepath}
+		);
+	</insert>
+
+	<update id="delete" parameterType="Integer">
+		UPDATE ACTIVITY set
+		acti_exist=0
+		WHERE acti_no = #{acti_no}
+	</update>
+
+	<!-- 페이징-->
+	<select id="activityListPaging" resultType="ActivityVO"
+		parameterType="Integer">
+		SELECT * FROM ACTIVITY 
+		WHERE acti_exist =1 AND acti_b_no=#{acti_b_no}
+		ORDER BY acti_no desc
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	
+	<!-- 카운트 -->
+	<select id="activityCount" resultType="Integer"
+		parameterType="Integer">
+		SELECT count(acti_b_no) as totalCount from ACTIVITY 
+		WHERE acti_b_no=#{acti_b_no} AND acti_exist = 1
+	</select>
+	
+</mapper>
+

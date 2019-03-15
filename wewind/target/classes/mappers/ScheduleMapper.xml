@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <mapper namespace="com.spring.wewind.dao.IScheduleDao"> -->
+<mapper namespace="schedule">
+	<select id="scheduleList" resultType="ScheduleVO">
+		SELECT * FROM SCHEDULE ORDER BY sch_date DESC
+	</select>
+	
+	<!-- 로그인 연결하여 sch_no, sch_b_no, sch_writer 수정 필요 -->
+	<!-- <result property="rdate" column="S_DATE" javaType="java.sql.Timestamp"/>  -->
+	<insert id="scheduleWrite">
+		insert into SCHEDULE (sch_no, sch_b_no, sch_title, sch_writer, sch_writedate, sch_content, sch_place, sch_date, sch_time, sch_exist) values (11, 11, #{sch_title}, 'test', now(), #{sch_content}, #{sch_place}, #{sch_date}, #{sch_time}, 1)
+	</insert>
+	
+	<select id="scheduleContentView" resultType="ScheduleVO">
+		select * from SCHEDULE where sch_no = #{sch_no}
+	</select>
+	
+	<delete id="scheduleDelete">
+		delete from SCHEDULE where sch_no = #{sch_no}
+	</delete>
+	
+	<select id="scheduleModifyView" resultType="ScheduleVO">
+		SELECT * FROM SCHEDULE WHERE sch_no = #{sch_no}
+	</select>
+	
+	<update id="scheduleModify">
+		UPDATE SCHEDULE SET sch_title=#{sch_title}, sch_place=#{sch_place}, sch_date=#{sch_date}, sch_time=#{sch_time}, sch_content=#{sch_content} WHERE sch_no = #{sch_no}
+	</update>
+	
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <!-- 어떤 드라이버를 쓰고, db는 뭐쓰고 이런것들 적는 곳인데 우리는 spring에서 설정을 다 해놨다. -->
+ <!-- configuration이 루트 태그이고, 이 안에 설정을 해주면 된다. -->
+<configuration>
+	<!-- 패키지네임을 aliase시키겠다는 것이다.("com.dev.vo"는 생략!) -->
+	<typeAliases>
+		<package name="com.spring.wewind.vo"/>
+	</typeAliases>
+<!-- 	<typeAliases>
+		<typeAlias type="com.spring.wewind.vo.ScheduleVO" alias="scheduleVO"/>
+		<typeAlias type="com.spring.wewind.vo.ContestVO" alias="contestVO"/>
+	</typeAliases> -->
+</configuration>
+

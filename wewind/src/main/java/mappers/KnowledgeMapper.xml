@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Knowledge">
+
+	<!-- 지식공유 게시판 메인 -->
+	<select id="select" resultType="KnowledgeVO" parameterType="KnowledgeVO">
+		SELECT * from KNOWLEDGE 
+		WHERE know_exist =1 AND know_b_no=#{know_b_no}
+		ORDER BY know_b_no desc
+	</select>
+	
+	<!-- 지식공유 게시글 생성 -->
+	<insert id="create" parameterType="KnowledgeVO">
+		INSERT INTO KNOWLEDGE (
+			know_b_no, know_title, know_writer, know_writedate, know_content, know_filepath		
+		)
+		VALUES(
+			#{know_b_no}, #{know_title}, #{know_writer}, now(),#{know_content}, #{know_filepath}
+		);
+	</insert>
+	
+	<!-- 지식공유 게시글 수정 -->
+	<update id="update"  parameterType="KnowledgeVO">
+		UPDATE KNOWLEDGE set 
+			know_title =#{know_title},
+			know_content=#{know_content}, 
+			know_filepath=#{know_filepath}
+		WHERE know_no = #{know_no}
+	</update>
+
+	<!-- 지식공유  게시글 상세보기 -->
+	<select id="selectOne" resultType="KnowledgeVO"
+		parameterType="Integer">
+		SELECT * FROM KNOWLEDGE WHERE know_no = #{know_no}
+	</select>
+
+
+	<update id="delete" parameterType="Integer">
+		UPDATE KNOWLEDGE set
+		know_exist= 0
+		WHERE know_no = #{know_no}
+	</update>	
+	
+		<!-- 페이징-->
+	<select id="knowledgeListPaging" resultType="KnowledgeVO"
+		parameterType="Integer">
+		SELECT * from KNOWLEDGE 
+		WHERE know_exist =1 AND know_b_no=#{know_b_no}
+		ORDER BY know_no desc
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	
+	<!-- 카운트 -->
+	<select id="knowledgeCount" resultType="Integer"
+		parameterType="Integer">
+		SELECT count(know_b_no) as totalCount from KNOWLEDGE 
+		WHERE know_b_no=#{know_b_no} AND know_exist = 1
+	</select>
+	
+	
+</mapper>
+
