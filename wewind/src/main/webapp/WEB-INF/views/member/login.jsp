@@ -64,6 +64,7 @@
 			}else if($("#password").val() == ""){
 				alert("PW를 입력하세요.");
 			}else{
+				alrt("로그인 되었습니다!");
 				$("#loginForm").submit();
 			}
 		});
