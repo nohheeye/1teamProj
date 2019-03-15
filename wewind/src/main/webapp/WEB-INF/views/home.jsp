@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>
-여기는 back입니다.
+여기는 back입니다.master로 반영해보겠음.
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
