@@ -6,7 +6,7 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>front git</h1>
+<p>제발바뀌렴</p>
 
 <P>  The time on the server is ${serverTime}. </P>
 </body>
