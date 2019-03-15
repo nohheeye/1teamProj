@@ -7,11 +7,7 @@
 </head>
 <body>
 <h1>
-<<<<<<< HEAD
 	Hello!!!!! !!!!!!!!
-=======
-	Hellooooooooooooooooooooooooooooooooo  
->>>>>>> branch 'master' of https://github.com/youngjin8228/1teamProj.git
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
